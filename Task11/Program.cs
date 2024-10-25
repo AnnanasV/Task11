@@ -1,10 +1,17 @@
 ﻿using Attributes;
+using System.Reflection;
+using Task11;
 
-[Documentation("Anna", Version = 1)]
-void Method1 () { }
+Type type = typeof(SampleClass);
 
-[Documentation("Pavel", "Second version of this method", Version = 2)]
-void Method2 () { }
-
-[Documentation("Liza", Version = 1)]
-void Method3 () { }
+foreach(var method in type.GetMethods())
+{
+    var attribute = method.GetCustomAttribute<DocumentationAttribute>();
+    if(attribute != null)
+    {
+        Console.WriteLine($"\nMethod:{method.Name}, " +
+            $"Author:{attribute.Author}, " +
+            $"Version:{attribute.Version}, " +
+            $"Description:{attribute.Description}");
+    }
+}
